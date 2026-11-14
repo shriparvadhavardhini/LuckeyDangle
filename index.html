@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lucky Dangle</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ============================================================
+       BACKGROUND LAYERS
+       Two purely decorative layers: a slow drifting light wash and
+       a fine grain texture. Both are CSS only, no JS cost.
+       ============================================================ -->
+  <div class="ambient-wash" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- ============================================================
+       PHYSICS CANVAS
+       Everything simulated is drawn here: the rope, the glow behind
+       the charm, the floating dust and the impact rings.
+       The charm itself is a DOM element (see .charm below) so the
+       character image is trivial to swap out.
+       ============================================================ -->
+  <canvas id="stage" aria-hidden="true"></canvas>
+
+  <!-- ============================================================
+       THE CHARM
+       Positioned every frame by JavaScript via transform.
+       Replace assets/character.png to change the character.
+       If that file is missing, the CSS fallback charm is shown.
+       ============================================================ -->
+  <div class="charm" id="charm" role="img" aria-label="Hanging lucky charm">
+    <div class="charm__inner">
+      <!-- the little brass cap the rope is knotted through -->
+      <div class="charm__cap"></div>
+
+      <!-- your artwork -->
+      <img class="charm__image" id="charmImage" src="assets/character.png" alt="" draggable="false" />
+
+      <!-- shown only if assets/character.png cannot be loaded -->
+      <div class="charm__fallback" id="charmFallback" hidden>
+        <div class="charm__body">
+          <span class="charm__glyph">福</span>
+        </div>
+        <div class="charm__tassel"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       PAGE COPY
+       Deliberately quiet so the charm stays the focus.
+       ============================================================ -->
+  <main class="page">
+    <h1 class="wordmark">Lucky Dangle</h1>
+    <p class="lede">
+      A small charm strung from the top of your browser. Drag it, flick it,
+      or leave it alone and it will settle on its own.
+    </p>
+    <p class="hint" id="hint">Drag to pull &middot; double-click to swing hard</p>
+  </main>
+
+  <!-- ============================================================
+       CONTROL PANEL
+       ============================================================ -->
+  <section class="panel" id="panel" aria-label="Charm controls">
+    <header class="panel__head">
+      <h2 class="panel__title">Charm</h2>
+      <span class="panel__fps" id="fps">60 fps</span>
+    </header>
+
+    <div class="control">
+      <label for="swing">Swing intensity</label>
+      <input type="range" id="swing" min="0" max="200" value="100" />
+      <output id="swingOut">1.00&times;</output>
+    </div>
+
+    <div class="control">
+      <label for="gravity">Gravity</label>
+      <input type="range" id="gravity" min="0" max="220" value="100" />
+      <output id="gravityOut">1.00&times;</output>
+    </div>
+
+    <div class="control">
+      <label for="damping">Damping</label>
+      <input type="range" id="damping" min="0" max="100" value="20" />
+      <output id="dampingOut">0.20</output>
+    </div>
+
+    <div class="panel__actions">
+      <button type="button" id="resetBtn">Reset position</button>
+      <button type="button" id="hideBtn" aria-pressed="false">Hide charm</button>
+    </div>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
